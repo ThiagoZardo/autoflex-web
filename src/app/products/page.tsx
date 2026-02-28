@@ -1,5 +1,6 @@
 "use client";
 
+import { Plus, Trash2, Package } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, createProduct, deleteProduct } from "@/src/features/products/productsSlice";
@@ -39,7 +40,10 @@ export default function ProductsPage() {
     <div className="max-w-5xl mx-auto py-10">
       {/* HEADER */}
       <div className="mb-10">
-        <h1 className="text-4xl font-bold text-gray-900">Produtos</h1>
+        <div className="flex items-center gap-3">
+          <Package size={28} />
+          <h1 className="text-4xl font-bold text-gray-900">Produtos</h1>
+        </div>
         <p className="text-gray-500 mt-2">Gerencie os pratos disponíveis no sistema.</p>
       </div>
 
@@ -69,8 +73,12 @@ export default function ProductsPage() {
             />
           </div>
 
-          <button type="submit" className="bg-black text-white px-6 py-2 rounded-xl hover:bg-gray-800 transition self-end cursor-pointer">
-            Criar Produto
+          <button
+            type="submit"
+            className="bg-black text-white px-6 py-2 rounded-xl hover:bg-gray-800 transition self-end cursor-pointer flex items-center gap-2"
+          >
+            <Plus size={18} />
+            Criar
           </button>
         </form>
       </div>
@@ -89,7 +97,7 @@ export default function ProductsPage() {
               <tr>
                 <th className="text-left px-6 py-4">Nome</th>
                 <th className="text-left px-6 py-4">Valor</th>
-                <th className="text-right px-6 py-4">Ações</th>
+                <th className="text-left px-6 py-4">Ações</th>
               </tr>
             </thead>
 
@@ -101,9 +109,9 @@ export default function ProductsPage() {
                   <td className="px-6 py-4 text-right">
                     <button
                       onClick={() => handleDelete(product.id)}
-                      className="text-red-500 hover:text-red-700 font-medium transition cursor-pointer"
+                      className="text-red-500 hover:text-red-700 font-medium transition cursor-pointer flex items-center justify-end gap-2"
                     >
-                      {" "}
+                      <Trash2 size={16} />
                       Excluir
                     </button>
                   </td>

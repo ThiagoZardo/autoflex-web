@@ -36,10 +36,13 @@ export default function Sidebar() {
 const styles = {
   sidebar: {
     width: "220px",
-    height: "100vh",
     background: "#1e1e1e",
     color: "white",
     padding: "20px",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    bottom: 0,
   },
   menuItem: {
     padding: "10px",
