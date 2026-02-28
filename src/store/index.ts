@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import productsReducer from "@/src/domains/products/store/productsSlice";
-import rawMaterialsReducer from "@/src/features/raw-materials/rawMaterialsSlice";
+import rawMaterialsReducer from "@/src/domains/raw-materials/store/rawMaterialsSlice";
 import productRawMaterialsReducer from "@/src/features/product-raw-materials/productRawMaterialsSlice";
 
 export const store = configureStore({
