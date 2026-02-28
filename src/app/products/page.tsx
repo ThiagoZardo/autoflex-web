@@ -3,19 +3,27 @@
 import { Plus, Trash2, Package } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, createProduct, deleteProduct } from "@/src/features/products/productsSlice";
+import { fetchProducts, createProduct, deleteProduct, Product } from "@/src/features/products/productsSlice";
 import { RootState, AppDispatch } from "@/src/store";
 
 export default function ProductsPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { items, loading } = useSelector((state: RootState) => state.products);
-
+  const [products, setProducts] = useState<Product[]>([]);
   const [name, setName] = useState("");
   const [value, setValue] = useState("");
 
+  // Association states
+  const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
+  const [associations, setAssociations] = useState<any[]>([]);
+  const [rawMaterials, setRawMaterials] = useState<any[]>([]);
+  const [selectedMaterial, setSelectedMaterial] = useState("");
+  const [requiredQuantity, setRequiredQuantity] = useState("");
+
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+    fetchRawMaterials();
+  }, []);
 
   function handleCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -34,6 +42,35 @@ export default function ProductsPage() {
 
   function handleDelete(id: number) {
     dispatch(deleteProduct(id));
+  }
+
+  async function fetchRawMaterials() {
+    const res = await fetch("http://localhost:3000/raw-materials");
+    const data = await res.json();
+    setRawMaterials(data);
+  }
+
+  async function fetchAssociations(productId: number) {
+    const res = await fetch(`http://localhost:3000/products/${productId}/raw-materials`);
+    const data = await res.json();
+    setAssociations(data);
+  }
+
+  async function handleAddAssociation() {
+    if (!selectedMaterial || !requiredQuantity || !selectedProduct) return;
+
+    await fetch(`http://localhost:3000/products/${selectedProduct}/raw-materials`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        rawMaterialId: Number(selectedMaterial),
+        requiredQuantity: Number(requiredQuantity),
+      }),
+    });
+
+    setSelectedMaterial("");
+    setRequiredQuantity("");
+    fetchAssociations(selectedProduct);
   }
 
   return (
@@ -92,33 +129,79 @@ export default function ProductsPage() {
         {loading ? (
           <p className="p-6 text-gray-500">Carregando...</p>
         ) : (
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
-              <tr>
-                <th className="text-left px-6 py-4">Nome</th>
-                <th className="text-left px-6 py-4">Valor</th>
-                <th className="text-left px-6 py-4">Ações</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {items.map((product) => (
-                <tr key={product.id} className="border-t hover:bg-gray-50 transition">
-                  <td className="px-6 py-4 font-medium text-gray-900">{product.name}</td>
-                  <td className="px-6 py-4 text-gray-700">R$ {Number(product.value).toFixed(2)}</td>
-                  <td className="px-6 py-4 text-right">
-                    <button
-                      onClick={() => handleDelete(product.id)}
-                      className="text-red-500 hover:text-red-700 font-medium transition cursor-pointer flex items-center justify-end gap-2"
-                    >
-                      <Trash2 size={16} />
-                      Excluir
-                    </button>
-                  </td>
+          <>
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
+                <tr>
+                  <th className="text-left px-6 py-4">Nome</th>
+                  <th className="text-left px-6 py-4">Valor</th>
+                  <th className="text-left px-6 py-4">Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {items.map((product) => (
+                  <tr key={product.id} className="border-t hover:bg-gray-50 transition">
+                    <td className="px-6 py-4 font-medium text-gray-900">{product.name}</td>
+                    <td className="px-6 py-4 text-gray-700">R$ {Number(product.value).toFixed(2)}</td>
+                    <td className="p-4 text-right space-x-4">
+                      <button
+                        onClick={() => {
+                          setSelectedProduct(product.id);
+                          fetchAssociations(product.id);
+                        }}
+                        className="text-blue-600 cursor-pointer"
+                      >
+                        Manage Materials
+                      </button>
+
+                      <button onClick={() => handleDelete(product.id)} className="text-red-500 cursor-pointer">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {selectedProduct && (
+              <div className="bg-white p-6 rounded-2xl shadow mt-8 space-y-4">
+                <h2 className="text-xl font-semibold">Product Raw Materials</h2>
+
+                <div className="flex flex-col md:flex-row gap-4">
+                  <select className="border p-2 rounded-xl flex-1" value={selectedMaterial} onChange={(e) => setSelectedMaterial(e.target.value)}>
+                    <option value="">Select material</option>
+                    {rawMaterials.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  <input
+                    type="number"
+                    placeholder="Required quantity"
+                    className="border p-2 rounded-xl w-full md:w-48"
+                    value={requiredQuantity}
+                    onChange={(e) => setRequiredQuantity(e.target.value)}
+                  />
+                </div>
+
+                <button onClick={handleAddAssociation} className="bg-black text-white px-4 py-2 rounded-xl cursor-pointer">
+                  Add Association
+                </button>
+
+                <div className="space-y-2">
+                  {associations.map((a) => (
+                    <div key={a.id} className="flex justify-between border p-3 rounded-xl">
+                      <span>{a.rawMaterialName}</span>
+                      <span>Qty: {a.requiredQuantity}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         )}
 
         {!loading && items.length === 0 && <p className="p-6 text-gray-500">Nenhum produto cadastrado.</p>}
