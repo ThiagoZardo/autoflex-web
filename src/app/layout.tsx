@@ -7,9 +7,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR">
       <body>
         <ReduxProvider>
-          <div style={{ display: "flex" }}>
+          <div className="flex min-h-screen">
             <Sidebar />
-            <main style={{ padding: "30px", flex: 1 }}>{children}</main>
+            <main className="flex-1 p-8 bg-gray-50 overflow-auto">{children}</main>{" "}
           </div>
         </ReduxProvider>
       </body>

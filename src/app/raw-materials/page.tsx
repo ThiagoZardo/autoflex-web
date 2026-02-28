@@ -16,7 +16,8 @@ export default function RawMaterialsPage() {
   if (loading) return <p>Carregando...</p>;
 
   return (
-    <div>
+    <div className="space-y-10 max-w-6xl mx-auto">
+      {" "}
       <h1>Raw Materials</h1>
       <ul>
         {items.map((rm) => (
