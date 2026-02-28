@@ -9,7 +9,7 @@ export default function Sidebar() {
   const menu = [
     { name: "Produtos", path: "/products" },
     { name: "Matérias-Primas", path: "/raw-materials" },
-    { name: "Associações", path: "/product-raw-materials" },
+    { name: "Associações", path: "/associations" },
     { name: "Manufacturing Plan", path: "/manufacturing-plan" },
   ];
 

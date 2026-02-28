@@ -27,7 +27,7 @@ const initialState: ProductRawMaterialsState = {
 };
 
 export const fetchProductRawMaterials = createAsyncThunk("productRawMaterials/fetchAll", async () => {
-  return await apiFetch("/product-raw-materials");
+  return await apiFetch("/associations");
 });
 
 const productRawMaterialsSlice = createSlice({
