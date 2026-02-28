@@ -1,0 +1,50 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+export default function Sidebar() {
+  const pathname = usePathname();
+
+  const menu = [
+    { name: "Produtos", path: "/products" },
+    { name: "Matérias-Primas", path: "/raw-materials" },
+    { name: "Associações", path: "/product-raw-materials" },
+    { name: "Manufacturing Plan", path: "/manufacturing-plan" },
+  ];
+
+  return (
+    <div style={styles.sidebar}>
+      <h2 style={{ marginBottom: "20px" }}>AutoFlex</h2>
+
+      {menu.map((item) => (
+        <Link key={item.path} href={item.path}>
+          <div
+            style={{
+              ...styles.menuItem,
+              backgroundColor: pathname === item.path ? "#333" : "transparent",
+            }}
+          >
+            {item.name}
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+const styles = {
+  sidebar: {
+    width: "220px",
+    height: "100vh",
+    background: "#1e1e1e",
+    color: "white",
+    padding: "20px",
+  },
+  menuItem: {
+    padding: "10px",
+    borderRadius: "6px",
+    marginBottom: "8px",
+    cursor: "pointer",
+  },
+};
