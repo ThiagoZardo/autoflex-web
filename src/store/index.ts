@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productsReducer from "../features/products/productsSlice";
+import productsReducer from "@/src/domains/products/store/productsSlice";
 import rawMaterialsReducer from "@/src/features/raw-materials/rawMaterialsSlice";
 import productRawMaterialsReducer from "@/src/features/product-raw-materials/productRawMaterialsSlice";
 
