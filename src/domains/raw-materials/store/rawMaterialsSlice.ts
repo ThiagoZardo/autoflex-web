@@ -13,6 +13,7 @@ const initialState: State = {
 };
 
 export const fetchRawMaterials = createAsyncThunk("rawMaterials/fetch", async () => {
+  console.log("Fetching raw materials...");
   return await getRawMaterials();
 });
 
@@ -21,6 +22,7 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    console.log("Setting up extra reducers for rawMaterials slice...");
     builder
       .addCase(fetchRawMaterials.pending, (state) => {
         state.loading = true;

@@ -18,15 +18,16 @@ export default function Sidebar() {
       <h2 style={{ marginBottom: "20px" }}>AutoFlex</h2>
 
       {menu.map((item) => (
-        <Link key={item.path} href={item.path}>
-          <div
-            style={{
-              ...styles.menuItem,
-              backgroundColor: pathname === item.path ? "#333" : "transparent",
-            }}
-          >
-            {item.name}
-          </div>
+        <Link
+          key={item.path}
+          href={item.path}
+          style={{
+            ...styles.menuItem,
+            backgroundColor: pathname === item.path ? "#333" : "transparent",
+            display: "block",
+          }}
+        >
+          {item.name}
         </Link>
       ))}
     </div>
