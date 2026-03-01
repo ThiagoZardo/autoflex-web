@@ -1,4 +1,4 @@
-# AutoFlex Web
+# 🌐 AutoFlex Web
 
 Frontend da aplicação **AutoFlex**, desenvolvido com **Next.js (App Router)**, **TypeScript** e **Redux Toolkit**, utilizando arquitetura modular por domínio.
 
@@ -12,52 +12,31 @@ Frontend da aplicação **AutoFlex**, desenvolvido com **Next.js (App Router)**,
 - Redux Toolkit
 - TailwindCSS
 - Arquitetura modular (Domain-Driven Structure)
+- Docker
 
 ---
 
-## 📦 Instalação
+# 🐳 Execução com Docker (Recomendado)
 
-### 1️⃣ Clonar o repositório
-
-```bash
-git clone <repo-url>
-cd autoflex-web
-```
-
-### 2️⃣ Instalar dependências
-
-```bash
-npm install
-```
+O projeto pode ser executado de forma isolada ou junto com o backend utilizando **Docker Compose**.
 
 ---
 
-## ⚙️ Configuração de Ambiente
+## ▶️ Subir aplicação com Docker
 
-Crie um arquivo `.env.local` na raiz do projeto:
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3000
+```bash
+docker compose up --build
 ```
 
-### 🔹 Portas do projeto
+Isso irá:
 
-| Serviço     | Porta |
-|------------|--------|
-| Frontend   | 8080   |
-| Backend    | 3000   |
-
-O frontend roda na porta **8080** e consome a API do backend na **3000**.
+- Buildar o frontend
+- Subir o container na porta **8080**
+- Conectar automaticamente ao backend
 
 ---
 
-## ▶️ Executar o Projeto
-
-```bash
-npm run dev
-```
-
-Acesse no navegador:
+## 🌍 Acessar aplicação
 
 ```
 http://localhost:8080
@@ -65,7 +44,93 @@ http://localhost:8080
 
 ---
 
-## 🏗 Estrutura do Projeto
+## 🔄 Resetar containers
+
+```bash
+docker compose down
+docker compose up --build
+```
+
+---
+
+# 🔗 Integração com Backend
+
+O frontend consome a API do backend AutoFlex.
+
+### 🔹 Portas padrão:
+
+| Serviço  | Porta |
+| -------- | ----- |
+| Frontend | 8080  |
+| Backend  | 3000  |
+
+Fluxo:
+
+```
+Browser (8080)
+        ↓
+Next.js Frontend
+        ↓
+Backend API (3000)
+```
+
+---
+
+# ⚙️ Configuração de Ambiente
+
+Se estiver rodando **sem Docker**, crie um arquivo:
+
+```
+.env.local
+```
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
+
+### ⚠️ Importante
+
+- Variáveis públicas devem começar com `NEXT_PUBLIC_`
+- Após alterar `.env.local`, reinicie o servidor
+
+---
+
+# 🧪 Executando Localmente (Sem Docker)
+
+## 1️⃣ Clonar repositório
+
+```bash
+git clone <repo-url>
+cd autoflex-web
+```
+
+---
+
+## 2️⃣ Instalar dependências
+
+```bash
+npm install
+```
+
+---
+
+## 3️⃣ Executar em modo desenvolvimento
+
+```bash
+npm run dev
+```
+
+Acesse:
+
+```
+http://localhost:8080
+```
+
+⚠️ O backend precisa estar rodando antes.
+
+---
+
+# 🏗 Estrutura do Projeto
 
 ```
 src/
@@ -83,15 +148,15 @@ src/
  │
  ├── components/              # Componentes globais (Layout, Sidebar)
  ├── store/                   # Configuração global do Redux
- ├── config/                  # Configurações (env, etc)
- └── services/                # Serviços globais (se necessário)
+ ├── config/                  # Configurações (env)
+ └── services/                # Comunicação com API
 ```
 
 ---
 
-## 🧠 Arquitetura
+# 🧠 Arquitetura
 
-O projeto segue uma abordagem **Domain-Driven**, onde cada domínio contém:
+O projeto segue abordagem **Domain-Driven**, onde cada domínio contém:
 
 ```
 domain/
@@ -104,14 +169,14 @@ domain/
 
 Essa separação garante:
 
-- Escalabilidade  
-- Organização  
-- Baixo acoplamento  
-- Facilidade de manutenção  
+- Escalabilidade
+- Organização
+- Baixo acoplamento
+- Facilidade de manutenção
 
 ---
 
-## 🌍 Rotas Disponíveis
+# 🌍 Rotas Disponíveis
 
 - `/products`
 - `/raw-materials`
@@ -122,19 +187,7 @@ A rota `/` redireciona automaticamente para `/products`.
 
 ---
 
-## 🔄 Fluxo da Aplicação
-
-```
-Browser (8080)
-        ↓
-Next.js Frontend
-        ↓
-Backend API (3000)
-```
-
----
-
-## 🧪 Scripts Disponíveis
+# 🧪 Scripts Disponíveis
 
 ```bash
 npm run dev     # Desenvolvimento (porta 8080)
@@ -145,22 +198,32 @@ npm run lint    # Lint
 
 ---
 
-## ⚠️ Observações Importantes
+# 📦 Build para Produção
 
-- Sempre reinicie o servidor após alterar o `.env`
-- Variáveis expostas ao frontend devem começar com `NEXT_PUBLIC_`
-- O backend deve estar rodando antes de iniciar o frontend
-- Projeto preparado para expansão modular por domínio
+```bash
+npm run build
+npm run start
+```
+
+Ou via Docker:
+
+```bash
+docker compose up --build
+```
 
 ---
 
-## 📌 Requisitos
+# ⚠️ Observações Importantes
 
-- Node.js 18+
-- Backend AutoFlex rodando na porta 3000
+- O backend deve estar disponível na URL configurada
+- Sempre reinicie o servidor após alterar variáveis de ambiente
+- Projeto preparado para expansão modular por domínio
+- Docker pronto para ambiente de produção
 
 ---
 
 ## 👨‍💻 AutoFlex
 
-Projeto desenvolvido para controle de produtos, matérias-primas, associações e planejamento de produção.
+Interface web para controle de produtos, matérias-primas, associações e planejamento de produção.
+
+Projeto desenvolvido com foco em arquitetura modular, escalabilidade e integração full-stack containerizada.
