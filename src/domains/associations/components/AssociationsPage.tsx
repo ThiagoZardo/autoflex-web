@@ -1,9 +1,16 @@
 "use client";
 
+import { Trash2 } from "lucide-react";
 import { useAssociations } from "../hooks/useAssociations";
+import { deleteAssociation } from "../services/associations.service";
 
 export default function AssociationsPage() {
   const { associations, loading, remove } = useAssociations();
+
+  async function handleDelete(id: number) {
+    await deleteAssociation(id);
+    window.location.reload();
+  }
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -35,8 +42,12 @@ export default function AssociationsPage() {
                   <td className="p-4">{a.rawMaterialName ?? a.rawMaterialId}</td>
                   <td className="p-4">{a.quantity}</td>
                   <td className="p-4 text-right">
-                    <button onClick={() => remove(a.id)} className="text-red-500 cursor-pointer">
-                      Delete
+                    <button
+                      onClick={() => handleDelete(a.id)}
+                      className="text-red-500 hover:text-red-700 font-medium transition cursor-pointer flex items-center justify-end gap-2"
+                    >
+                      <Trash2 size={16} />
+                      Excluir
                     </button>
                   </td>
                 </tr>

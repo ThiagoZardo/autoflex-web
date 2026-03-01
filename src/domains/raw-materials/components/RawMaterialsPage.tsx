@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRawMaterials } from "../hooks/useRawMaterials";
 import { createRawMaterial, deleteRawMaterial } from "../services/rawMaterials.service";
+import { Plus, Trash2 } from "lucide-react";
 
 export default function RawMaterialsPage() {
   const { materials, loading } = useRawMaterials();
@@ -42,8 +43,12 @@ export default function RawMaterialsPage() {
 
           <input type="number" value={stock} onChange={(e) => setStock(e.target.value)} placeholder="Stock" className="border p-2 rounded-xl w-40" />
 
-          <button type="submit" className="bg-black text-white px-6 rounded-xl cursor-pointer">
-            Create
+          <button
+            type="submit"
+            className="bg-black text-white px-6 py-2 rounded-xl hover:bg-gray-800 transition self-end cursor-pointer flex items-center gap-2"
+          >
+            <Plus size={18} />
+            Criar
           </button>
         </div>
       </form>
@@ -74,8 +79,12 @@ export default function RawMaterialsPage() {
                   <td className="p-4">{m.name}</td>
                   <td className="p-4">{m.stock}</td>
                   <td className="p-4 text-right">
-                    <button onClick={() => handleDelete(m.id)} className="text-red-500 cursor-pointer">
-                      Delete
+                    <button
+                      onClick={() => handleDelete(m.id)}
+                      className="text-red-500 hover:text-red-700 font-medium transition cursor-pointer flex items-center justify-end gap-2"
+                    >
+                      <Trash2 size={16} />
+                      Excluir
                     </button>
                   </td>
                 </tr>
