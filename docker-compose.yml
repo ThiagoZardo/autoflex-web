@@ -1,0 +1,9 @@
+services:
+  autoflex-web:
+    build: .
+    container_name: autoflex-web
+    ports:
+      - "8080:8080"
+    environment:
+      NEXT_PUBLIC_API_URL: http://host.docker.internal:3000
+    restart: unless-stopped

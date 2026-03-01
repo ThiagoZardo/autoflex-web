@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CSSProperties } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -34,7 +35,10 @@ export default function Sidebar() {
   );
 }
 
-const styles = {
+const styles: {
+  sidebar: CSSProperties;
+  menuItem: CSSProperties;
+} = {
   sidebar: {
     width: "220px",
     background: "#1e1e1e",
