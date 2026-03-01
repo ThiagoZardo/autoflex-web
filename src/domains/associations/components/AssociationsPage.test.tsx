@@ -20,7 +20,7 @@ describe("AssociationsPage", () => {
     });
 
     render(<AssociationsPage />);
-    expect(screen.getByText(/Associations/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Associations/i })).toBeInTheDocument();
   });
 
   it("should display loading state", () => {
