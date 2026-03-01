@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AutoFlex Web
 
-## Getting Started
+Frontend da aplicação **AutoFlex**, desenvolvido com **Next.js (App Router)**, **TypeScript** e **Redux Toolkit**, utilizando arquitetura modular por domínio.
 
-First, run the development server:
+---
+
+## 🚀 Tecnologias Utilizadas
+
+- Next.js 13+
+- React
+- TypeScript
+- Redux Toolkit
+- TailwindCSS
+- Arquitetura modular (Domain-Driven Structure)
+
+---
+
+## 📦 Instalação
+
+### 1️⃣ Clonar o repositório
+
+```bash
+git clone <repo-url>
+cd autoflex-web
+```
+
+### 2️⃣ Instalar dependências
+
+```bash
+npm install
+```
+
+---
+
+## ⚙️ Configuração de Ambiente
+
+Crie um arquivo `.env.local` na raiz do projeto:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
+
+### 🔹 Portas do projeto
+
+| Serviço     | Porta |
+|------------|--------|
+| Frontend   | 8080   |
+| Backend    | 3000   |
+
+O frontend roda na porta **8080** e consome a API do backend na **3000**.
+
+---
+
+## ▶️ Executar o Projeto
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse no navegador:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:8080
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🏗 Estrutura do Projeto
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+ ├── app/                     # Rotas (Next.js App Router)
+ │    ├── products
+ │    ├── raw-materials
+ │    ├── associations
+ │    └── manufacturing-plan
+ │
+ ├── domains/                 # Estrutura modular por domínio
+ │    ├── products
+ │    ├── raw-materials
+ │    ├── associations
+ │    └── manufacturing-plan
+ │
+ ├── components/              # Componentes globais (Layout, Sidebar)
+ ├── store/                   # Configuração global do Redux
+ ├── config/                  # Configurações (env, etc)
+ └── services/                # Serviços globais (se necessário)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧠 Arquitetura
 
-## Deploy on Vercel
+O projeto segue uma abordagem **Domain-Driven**, onde cada domínio contém:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+domain/
+ ├── components      # UI
+ ├── hooks           # Hooks customizados
+ ├── services        # Comunicação com API
+ ├── store           # Slice Redux
+ └── types           # Tipagens
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Essa separação garante:
+
+- Escalabilidade  
+- Organização  
+- Baixo acoplamento  
+- Facilidade de manutenção  
+
+---
+
+## 🌍 Rotas Disponíveis
+
+- `/products`
+- `/raw-materials`
+- `/associations`
+- `/manufacturing-plan`
+
+A rota `/` redireciona automaticamente para `/products`.
+
+---
+
+## 🔄 Fluxo da Aplicação
+
+```
+Browser (8080)
+        ↓
+Next.js Frontend
+        ↓
+Backend API (3000)
+```
+
+---
+
+## 🧪 Scripts Disponíveis
+
+```bash
+npm run dev     # Desenvolvimento (porta 8080)
+npm run build   # Build de produção
+npm run start   # Executa build
+npm run lint    # Lint
+```
+
+---
+
+## ⚠️ Observações Importantes
+
+- Sempre reinicie o servidor após alterar o `.env`
+- Variáveis expostas ao frontend devem começar com `NEXT_PUBLIC_`
+- O backend deve estar rodando antes de iniciar o frontend
+- Projeto preparado para expansão modular por domínio
+
+---
+
+## 📌 Requisitos
+
+- Node.js 18+
+- Backend AutoFlex rodando na porta 3000
+
+---
+
+## 👨‍💻 AutoFlex
+
+Projeto desenvolvido para controle de produtos, matérias-primas, associações e planejamento de produção.
