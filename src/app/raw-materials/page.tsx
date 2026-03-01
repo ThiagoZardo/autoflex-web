@@ -1,4 +1,4 @@
-import RawMaterialsPage from "@/src/domains/raw-materials/components/RawMaterialsPage";
+import RawMaterialsPage from "@/src/domains/raw-materials";
 
 export default function Page() {
   return <RawMaterialsPage />;
