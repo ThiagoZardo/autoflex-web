@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function apiFetch(endpoint: string, options?: RequestInit) {
   console.log(`Fetching: ${API_URL}${endpoint}`);

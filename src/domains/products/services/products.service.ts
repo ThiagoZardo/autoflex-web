@@ -1,8 +1,9 @@
-const BASE_URL = "http://localhost:3000/products"
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = `${API_URL}/products`;
 
 export async function getProducts() {
-  const res = await fetch(BASE_URL)
-  return res.json()
+  const res = await fetch(BASE_URL);
+  return res.json();
 }
 
 export async function createProduct(data: { name: string; value: number }) {
@@ -10,11 +11,11 @@ export async function createProduct(data: { name: string; value: number }) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  })
+  });
 }
 
 export async function deleteProduct(id: number) {
   await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",
-  })
+  });
 }

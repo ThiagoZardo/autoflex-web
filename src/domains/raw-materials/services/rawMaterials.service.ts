@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:3000/raw-materials";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = `${API_URL}/raw-materials`;
 
 export async function getRawMaterials() {
   const res = await fetch(BASE_URL);
