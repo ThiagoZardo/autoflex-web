@@ -11,7 +11,7 @@ export function useAssociations() {
   async function load() {
     setLoading(true);
     const data = await getAssociations();
-    setAssociations(data);
+    setAssociations(data.associations ?? []);
     setLoading(false);
   }
 
